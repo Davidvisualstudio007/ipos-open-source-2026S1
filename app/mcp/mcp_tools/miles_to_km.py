@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field
 
 router = APIRouter(prefix="", tags=["unit-conversion"])
 
+MAX_TUTORIAL_MILES = 100_000
+
 
 # --- Request/Response models for clarity ---
 class MilestoKmRequest(BaseModel):
@@ -39,8 +41,6 @@ def miles_to_kilometers_value(miles: float) -> float:
     Raises:
         ValueError: If a negative distance is provided.
     """
-    MAX_TUTORIAL_MILES = 100_000
-
     if miles is None:
         raise HTTPException(status_code=422, detail="Miles is required.")
     if not isinstance(miles, (int, float)):
@@ -51,7 +51,7 @@ def miles_to_kilometers_value(miles: float) -> float:
         raise HTTPException(
             status_code=422, detail="Distance must be greater than zero."
         )
-    if miles < 0.0001:
+    if miles < 0.0001:  # noqa: PLR2004
         raise HTTPException(
             status_code=422, detail="Distance is too small to be meaningful."
         )

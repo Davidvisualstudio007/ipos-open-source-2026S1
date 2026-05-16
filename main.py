@@ -104,5 +104,4 @@ if __name__ == "__main__":
         host="localhost",
         port=PORT,
         log_level="trace",  # Uvicorn internal logging
-        log_config=LOG_CONFIG,
     )

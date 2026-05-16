@@ -117,3 +117,7 @@ quote-style = "double"
 docstring-code-format = true
 docstring-code-line-length = "dynamic"
 indent-style = "space"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests/mcp"]
