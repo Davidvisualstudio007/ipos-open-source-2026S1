@@ -5,8 +5,8 @@
 # or run: `uv tool install rust-just`
 # then run a recipe like 'just run' in your console
 
-PYTHON := "uv run"
-PIP := "uv pip"
+PYTHON := `command -v uv >/dev/null 2>&1 && echo "uv run" || echo "python3.14 -m"`
+PIP := `command -v uv >/dev/null 2>&1 && echo "uv pip" || echo "python3.14 -m pip"`
 
 # run the main script
 run:
@@ -18,8 +18,11 @@ test:
 
 # format, lint and type check the code
 check:
-    {{ PYTHON }} ruff format . && {{ PYTHON }} ruff check .
-    {{ PYTHON }} ty check .
+    ruff format . && ruff check .
+    ty check .
+
+install-deps:
+    command -v uv >/dev/null 2>&1 && echo "uv run sync" || echo "python3.14 -m pip-r requirements-dev.txt "
 
 # update dependencies
 update-dependencies:

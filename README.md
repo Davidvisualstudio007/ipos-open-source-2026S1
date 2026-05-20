@@ -5,7 +5,7 @@
 
 ## Prerequisites
 
-- Python 3.10+ (tested with 3.12).
+- Python 3.14+
 - Virtual environment.
 - npm inspector below.
 
@@ -22,6 +22,9 @@ source .venv/bin/activate
 # Windows powershell:
 .venv\Scripts\activate
 python -m pip install -r requirements.txt
+
+# or use UV:
+uv sync
 ```
 
 ⸻
@@ -31,7 +34,14 @@ python -m pip install -r requirements.txt
 ```bash
 # start the server
 
-python -m main
+# with CPython
+python3.14 -m main
+
+# with UV (recommended)
+uv run main.py
+
+# with just
+just run
 
 ```
 
