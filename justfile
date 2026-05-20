@@ -21,6 +21,9 @@ check:
     ruff format . && ruff check .
     ty check .
 
+install-deps:
+    command -v uv >/dev/null 2>&1 && echo "uv run sync" || echo "python3.14 -m pip-r requirements-dev.txt "
+
 # update dependencies
 update-dependencies:
     {{ PIP }} compile pyproject.toml -o requirements.txt
