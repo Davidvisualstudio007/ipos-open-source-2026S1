@@ -58,7 +58,7 @@ MCP endpoints served by FastMCP:
 ⸻
 
 ## Try the HTTP endpoints (curl)
-
+Using Mac:
 ```bash
 curl -X POST "http://localhost:8003/miles-to-kilometers?miles=3.1" \
  -H "Authorization: Bearer 143f4a46d74fee0d7918b2857577868cb3daf9e6e50ee91c2f7975ba26fdb8f7"
@@ -67,6 +67,17 @@ curl -X POST "http://localhost:8003/miles-to-kilometers?miles=3.1" \
 curl -X POST "http://localhost:8003/miles-to-kilometers" \
  -H "Content-Type: application/json" \
  -H "Authorization: Bearer Y658139cf61948208ed76a4b36122b9552ec5c3f6da5e02f7c5d85d995dede17dE" \
+ -d "3.1"
+```
+Using Windows:
+```bash
+curl -X POST "http://localhost:8003/miles-to-kilometers?miles=3.1" ^
+ -H "Authorization: Bearer 143f4a46d74fee0d7918b2857577868cb3daf9e6e50ee91c2f7975ba26fdb8f7"
+
+rem If we use pydantic models
+curl -X POST "http://localhost:8003/miles-to-kilometers" ^
+ -H "Content-Type: application/json" ^
+ -H "Authorization: Bearer Y658139cf61948208ed76a4b36122b9552ec5c3f6da5e02f7c5d85d995dede17dE" ^
  -d "3.1"
 ```
 
@@ -119,6 +130,7 @@ npx @modelcontextprotocol/inspector@latest -e DUMMY=1 --url http://localhost:800
 ```
 
 ## JSON-RPC Examples for Prompts & Resources
+(On Windows, paste those into a text editor and replace all `\` with `^`)
 
 1. List all prompts
 
