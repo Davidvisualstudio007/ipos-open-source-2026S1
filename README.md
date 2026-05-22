@@ -92,12 +92,12 @@ just run
 
 You'll see:
 
-- Swagger UI: <http://localhost:8003/docs>
-- ReDoc: <http://localhost:8003/redoc>
+- Swagger UI: http://localhost:8003/docs
+- ReDoc: http://localhost:8003/redoc
 
 MCP endpoints served by FastMCP:
 
-- streamable-http: <http://localhost:8003/mcp>
+- streamable-http: http://localhost:8003/mcp
 
 Each endpoint returns JSON like:
 
@@ -131,7 +131,7 @@ Our server doesn't require auth yet, we can omit the **Authorization** header.
 }
 ```
 
-1. From the MCP client, list artifacts. You should see:
+3. From the MCP client, list artifacts. You should see:
    - Tools: celsius_to_fahrenheit, fahrenheit_to_celsius, kilometers_to_miles, miles_to_kilometers
    - Resources: resource://unit_reference, resource://troubleshooting_guide
    - Prompts: explain_conversion, api_usage
@@ -139,7 +139,7 @@ Our server doesn't require auth yet, we can omit the **Authorization** header.
 ## Inspect with the npm MCP Inspector
 
 - explore everything (tools, resources, prompts) in a browser.
-- with the server already running on <http://localhost:8003>
+- with the server already running on http://localhost:8003
 
 ```bash
 # If env error appears
@@ -202,6 +202,8 @@ example_llm_client/
 
 For detailed contribution guidelines, see [CONTRIBUTION.md](CONTRIBUTION.md).
 
+
+
 ## Handling errors
 
 - Parse error (-32700)
@@ -215,7 +217,6 @@ For detailed contribution guidelines, see [CONTRIBUTION.md](CONTRIBUTION.md).
 **To run test curl commands see `app/docs/curl_testing/mcp_curl_test_examples.md`.**
 
 macOS/Linux (bash/zsh)
-
 - The examples above will work as-is.
 
 ```bash
