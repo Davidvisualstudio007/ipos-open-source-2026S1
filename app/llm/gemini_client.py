@@ -67,3 +67,38 @@ class GeminiClient:
             response = await c.post(url, json=payload)
             response.raise_for_status()
             return GenerateContentResponse.model_validate(response.json())
+
+    async def stream_generate_content(
+        self,
+        request: GenerateContentRequest,
+        client: httpx.AsyncClient | None = None,
+    ) -> AsyncGenerator[GenerateContentResponse]:
+        """
+        Send a streaming request to Gemini via SSE.
+
+        Args:
+            request: The validated GenerateContentRequest model.
+            client: Optional existing httpx.AsyncClient.
+
+        Yields:
+            Validated GenerateContentResponse chunks as they arrive from the stream.
+        """
+        url = self._build_url("streamGenerateContent") + "&alt=sse"
+        payload = request.model_dump(by_alias=True, exclude_none=True)
+
+        # We manage a local client if one isn't provided
+        managed_client = client is None
+        c = client or httpx.AsyncClient(timeout=60.0)
+
+        try:
+            async with aconnect_sse(c, "POST", url, json=payload) as event_source:
+                async for event in event_source.aiter_sse():
+                    if not event.data:
+                        continue
+
+                    # The Gemini API sends data chunks as JSON strings
+                    chunk_data = json.loads(event.data)
+                    yield GenerateContentResponse.model_validate(chunk_data)
+        finally:
+            if managed_client:
+                await c.aclose()
