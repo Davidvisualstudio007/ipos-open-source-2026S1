@@ -1,6 +1,4 @@
-"""
-Gemini API Pydantic V2 Models.
-"""
+"""Gemini API Pydantic V2 Models."""
 # Design Rationale:
 # - I've tried to follow the Gemini rest API specification as closely as possible while
 #   trying to maintain Python's snake case, I've also used used runtime type narrowing
@@ -46,14 +44,17 @@ class TextPart(BaseModel):
 
 
 class FunctionCallPart(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     function_call: FunctionCall = Field(..., alias="functionCall")
 
 
 class FunctionResponsePart(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     function_response: FunctionResponse = Field(..., alias="functionResponse")
 
 
 class InlineDataPart(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     inline_data: InlineData = Field(..., alias="inlineData")
 
 
@@ -79,6 +80,7 @@ def is_function_response_part(part: Part) -> TypeIs[FunctionResponsePart]:
 
 
 class Content(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     role: Role | str
     parts: list[Part]
 
@@ -107,11 +109,13 @@ class FunctionCallingConfigMode(StrEnum):
 
 
 class FunctionCallingConfig(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     mode: FunctionCallingConfigMode = FunctionCallingConfigMode.AUTO
     allowed_function_names: list[str] | None = Field(None, alias="allowedFunctionNames")
 
 
 class ToolConfig(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     function_calling_config: FunctionCallingConfig = Field(
         ..., alias="functionCallingConfig"
     )
@@ -121,6 +125,7 @@ class ToolConfig(BaseModel):
 
 
 class GenerationConfig(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     candidate_count: int | None = Field(None, alias="candidateCount")
     stop_sequences: list[str] | None = Field(None, alias="stopSequences")
     max_output_tokens: int | None = Field(None, alias="maxOutputTokens")
@@ -140,6 +145,7 @@ class GenerateContentRequest(BaseModel):
 
 
 class Candidate(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     content: Content
     finish_reason: str | None = Field(None, alias="finishReason")
     index: int | None = None
@@ -147,6 +153,7 @@ class Candidate(BaseModel):
 
 
 class UsageMetadata(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
     prompt_token_count: int = Field(..., alias="promptTokenCount")
     candidates_token_count: int = Field(..., alias="candidatesTokenCount")
     total_token_count: int = Field(..., alias="totalTokenCount")

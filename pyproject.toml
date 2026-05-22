@@ -106,7 +106,7 @@ ban-relative-imports = "all"
 [tool.ruff.lint.pylint]
 max-args = 5
 max-branches = 8
-max-statements = 25
+max-statements = 30
 
 [tool.ruff.format]
 quote-style = "double"

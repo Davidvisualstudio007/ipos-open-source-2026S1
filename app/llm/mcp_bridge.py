@@ -9,6 +9,7 @@ from app.models.gemini_models import (
     FunctionResponse,
 )
 
+
 # this is the simplest possible implementation to support translation between
 # MCP and Gemini models api, this must be refactored into a more robust solution
 class MCPBridge:
