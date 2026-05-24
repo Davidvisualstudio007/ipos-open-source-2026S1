@@ -6,8 +6,8 @@ Some intro paragraph here explaining the architecture...
 
 ```mermaid
 graph TD
-    HumanClient["Human ClientBrowser, curl, Postman"]
-    AIClient["AI ClientGemini, MCP Inspector"]
+    HumanClient["Human ClientBrowser,<br/> curl, Postman"]
+    AIClient["AI ClientGemini,<br/>MCP Inspector"]
     Gemini["Gemini APIExternalPLANNED"]
 
     subgraph AgServer ["Agriculture MCP Server (localhost:8003)"]
