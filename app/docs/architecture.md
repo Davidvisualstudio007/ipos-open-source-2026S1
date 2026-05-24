@@ -31,3 +31,10 @@ graph TD
     style Storage stroke-dasharray: 5 5
     style Gemini stroke-dasharray: 5 5
 ```
+
+## Legend
+
+- **Solid border** = built today (as of 05/24/2026)
+- **Dashed border** = planned, not yet built
+
+(...more content like the folder map table...)
