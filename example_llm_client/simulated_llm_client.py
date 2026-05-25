@@ -6,8 +6,9 @@ from typing import Any
 
 from dotenv import load_dotenv
 
-from app.llm.gemini_client import GeminiClient
-from app.models.gemini_models import (
+from app.llm.base import BaseLLMClient, LLMRequest
+from app.llm.providers.gemini.client import GeminiClient
+from app.llm.providers.gemini.models import (
     GenerateContentRequest,
     is_function_call_part,
     is_text_part,
@@ -15,7 +16,7 @@ from app.models.gemini_models import (
 
 load_dotenv()
 
-# Basic Setup
+# Configuration
 API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
 
@@ -42,11 +43,15 @@ def get_available_tools() -> list[dict[str, Any]]:
 async def perform_initial_turn(
     client: GeminiClient, query: str
 ) -> tuple[list[Any], Any]:
-    """Execute the first turn and return the message history and model response."""
+    """
+    Execute the first turn using the Gemini-specific interface
+    to support tool discovery.
+    """
     messages: list[Any] = [{"role": "user", "parts": [{"text": query}]}]
     tools = get_available_tools()
 
     print("\n[Thinking...]")
+    # Using the specific generate_content method for tool support
     response = await client.generate_content(
         GenerateContentRequest(contents=messages, tools=tools)  # type: ignore
     )
@@ -54,7 +59,7 @@ async def perform_initial_turn(
 
 
 def handle_manual_tool_call(call: Any) -> dict[str, Any]:
-    """Prompt the user for manual tool execution and return the formatted response."""
+    """Prompt the user for manual tool execution."""
     print(f"\n[Tool Requested: {call.name}]")
     print("\n--- ACTION REQUIRED ---")
     print(
@@ -76,16 +81,22 @@ def handle_manual_tool_call(call: Any) -> dict[str, Any]:
     }
 
 
-async def run() -> None:
+async def run_simple_demo(client: BaseLLMClient) -> None:
+    """Demonstrates the provider-agnostic 'generate' method."""
+    print("\n--- Provider-Agnostic Basic Call ---")
+    user_query = "Hello, what LLM are you?"
+    print(f"User: {user_query}")
+
+    request = LLMRequest(prompt=user_query)
+    response = await client.generate(request)
+
+    print(f"Gemini: {response.text}")
+
+
+async def run_mcp_demo(client: GeminiClient) -> None:
     """The main execution pipeline for the Gemini + MCP example."""
-    if not API_KEY:
-        print("Error: GEMINI_API_KEY not found in .env")
-        return
-
-    client = GeminiClient(api_key=API_KEY, model_name=MODEL)
-
-    print("--- Gemini MCP Simple Example ---")
-    user_query = input("User: ")
+    print("\n--- Gemini MCP Simulation ---")
+    user_query = input("User (e.g. 'what is 10 miles to km'): ")
 
     # 1. Start the conversation
     messages, model_turn = await perform_initial_turn(client, user_query)
@@ -113,5 +124,20 @@ async def run() -> None:
         print(f"\nGemini: {model_turn.parts[0].text}")
 
 
+async def main_async() -> None:
+    if not API_KEY:
+        print("Error: GEMINI_API_KEY not found in .env")
+        return
+
+    # Create the client - notice we type it as the base interface where appropriate
+    gemini_client = GeminiClient(api_key=API_KEY, model_name=MODEL)
+
+    # Run the agnostic demo
+    await run_simple_demo(gemini_client)
+
+    # Run the specific MCP demo
+    await run_mcp_demo(gemini_client)
+
+
 if __name__ == "__main__":
-    asyncio.run(run())
+    asyncio.run(main_async())
