@@ -6,23 +6,24 @@ from collections.abc import AsyncGenerator
 import httpx
 from httpx_sse import aconnect_sse
 
-from app.models.gemini_models import (
+from app.llm.base import BaseLLMClient, LLMProviderError, LLMRequest, LLMResponse
+from app.llm.providers.gemini.models import (
+    Content,
     GenerateContentRequest,
     GenerateContentResponse,
+    Role,
+    TextPart,
+    is_text_part,
 )
 
 
-class GeminiClient:
-    """
-    An asynchronous client for the Gemini API.
-
-    Handles both unary and streaming (SSE) content generation.
-    """
+class GeminiClient(BaseLLMClient):
+    """An asynchronous client for the Gemini API, implementing the BaseLLMClient interface."""
 
     def __init__(
         self,
         api_key: str,
-        model_name: str = "gemini-2.5-flash",
+        model_name: str = "gemini-2.0-flash",
         base_url: str = "https://generativelanguage.googleapis.com/v1beta",
     ):
         """
@@ -30,7 +31,7 @@ class GeminiClient:
 
         Args:
             api_key: Your Google AI Studio API key.
-            model_name: The Gemini model to use (e.g., 'gemini-2.5-flash').
+            model_name: The Gemini model to use.
             base_url: The base REST API URL.
         """
         self.api_key = api_key
@@ -39,23 +40,44 @@ class GeminiClient:
 
     def _build_url(self, method: str) -> str:
         """Construct the REST URL for a specific model method."""
+        # Note: We append the API key here, but avoid logging the full URL in case of error
         return f"{self.base_url}/models/{self.model_name}:{method}?key={self.api_key}"
+
+    async def generate(self, request: LLMRequest) -> LLMResponse:
+        """
+        Implementation of the BaseLLMClient interface.
+        Translates a generic LLMRequest into a Gemini-specific request.
+        """
+        # Convert generic prompt to Gemini Content
+        gemini_request = GenerateContentRequest(
+            contents=[Content(role=Role.USER, parts=[TextPart(text=request.prompt)])]
+        )
+
+        try:
+            response = await self.generate_content(gemini_request)
+
+            # Extract text from the first candidate
+            if not response.candidates:
+                return LLMResponse(text="", raw_response=response)
+
+            first_part = response.candidates[0].content.parts[0]
+            text = first_part.text if is_text_part(first_part) else ""
+
+            return LLMResponse(text=text, raw_response=response)
+
+        except httpx.HTTPError as e:
+            # Mask the API key in the error message if it's part of the URL
+            error_msg = str(e).replace(self.api_key, "REDACTED")
+            raise LLMProviderError(f"Gemini API request failed: {error_msg}") from e
+        except Exception as e:
+            raise LLMProviderError(f"An unexpected error occurred: {e}") from e
 
     async def generate_content(
         self,
         request: GenerateContentRequest,
         client: httpx.AsyncClient | None = None,
     ) -> GenerateContentResponse:
-        """
-        Send a single request to Gemini to generate content.
-
-        Args:
-            request: The validated GenerateContentRequest model.
-            client: Optional existing httpx.AsyncClient.
-
-        Returns:
-            A validated GenerateContentResponse model.
-        """
+        """Gemini-specific method for single content generation."""
         url = self._build_url("generateContent")
         payload = request.model_dump(by_alias=True, exclude_none=True)
 
@@ -74,20 +96,10 @@ class GeminiClient:
         request: GenerateContentRequest,
         client: httpx.AsyncClient | None = None,
     ) -> AsyncGenerator[GenerateContentResponse]:
-        """
-        Send a streaming request to Gemini via SSE.
-
-        Args:
-            request: The validated GenerateContentRequest model.
-            client: Optional existing httpx.AsyncClient.
-
-        Yields:
-            Validated GenerateContentResponse chunks as they arrive from the stream.
-        """
+        """Gemini-specific method for streaming content generation."""
         url = self._build_url("streamGenerateContent") + "&alt=sse"
         payload = request.model_dump(by_alias=True, exclude_none=True)
 
-        # We manage a local client if one isn't provided
         managed_client = client is None
         c = client or httpx.AsyncClient(timeout=60.0)
 
@@ -96,8 +108,6 @@ class GeminiClient:
                 async for event in event_source.aiter_sse():
                     if not event.data:
                         continue
-
-                    # The Gemini API sends data chunks as JSON strings
                     chunk_data = json.loads(event.data)
                     yield GenerateContentResponse.model_validate(chunk_data)
         finally:
