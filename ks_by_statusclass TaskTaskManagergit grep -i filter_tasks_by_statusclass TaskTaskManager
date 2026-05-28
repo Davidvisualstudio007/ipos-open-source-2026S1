@@ -1,0 +1,74 @@
+*   [33me394f8e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #36 from Robbo-lab/feat/rollback-requirements
+[31m|[m[32m\[m  
+[31m|[m * [33mbe002f7[m feat: rollback requirements.txt to remove uv until issue fixed
+[31m|[m[31m/[m  
+*   [33m1b6a962[m Merge pull request #34 from Robbo-lab/bug/core-to-api
+[33m|[m[34m\[m  
+[33m|[m * [33m463bbd3[m fix: semantically more correct folder name
+[33m|[m[33m/[m  
+* [33m779135e[m Update README.md
+*   [33m3ccb87a[m Merge pull request #26 from Robbo-lab/fix/justfile-uv-fallback
+[35m|[m[36m\[m  
+[35m|[m * [33m5f9a2cc[m fix: remove verbose ci name
+[35m|[m * [33m45a009f[m fix: add UV installation instructions
+[35m|[m *   [33me45d1bb[m Merge branch 'main' into fix/justfile-uv-fallback
+[35m|[m [1;31m|[m[35m\[m  
+[35m|[m [1;31m|[m[35m/[m  
+[35m|[m[35m/[m[1;31m|[m   
+* [1;31m|[m   [33me49eab7[m Merge pull request #20 from Robbo-lab/feature/removed-flake8-support
+[1;33m|[m[1;34m\[m [1;31m\[m  
+[1;33m|[m * [1;31m|[m [33m0e1a7fa[m fix: Update recommended linter to ruff
+[1;33m|[m * [1;31m|[m [33m77611a7[m feature: removed flake8 dependency from project
+[1;33m|[m[1;33m/[m [1;31m/[m  
+[1;33m|[m * [33m9f06fc8[m fix: update justfile to have a non-uv fallback
+[1;33m|[m[1;33m/[m  
+*   [33m442c050[m Merge pull request #19 from Robbo-lab/fix/merge-conflix-v2-for-feat/starting-architecture
+[1;35m|[m[1;36m\[m  
+[1;35m|[m * [33m2ba791a[m fix: resolve type diagnostics and stabilize pytest collection
+[1;35m|[m * [33m0856752[m fix: Update Python version and requirements file
+[1;35m|[m * [33m33af9fa[m fix: Correct workflow names and coverage paths
+[1;35m|[m * [33m78190b9[m fix: made httpx and explicit dependency
+[1;35m|[m * [33mb526b0e[m chore: align architecture with spec and fix pytest collection
+[1;35m|[m * [33mf953236[m fix: try to fix CI for the repo's current state
+[1;35m|[m * [33md2060f1[m feat: finalise strcuture, re-add responses, move llm client out
+[1;35m|[m * [33m8344fc9[m feat: restructure to spec
+[1;35m|[m * [33m9b42dba[m feat: refactor to spec structure
+[1;35m|[m * [33m26af4db[m feat: tool example
+[1;35m|[m * [33mfa74710[m feat: resource example
+[1;35m|[m * [33m348a24d[m feat: prompt example
+[1;35m|[m * [33m61eb772[m chore: en example mcp server
+[1;35m|[m * [33me51c5e6[m feat: entry point and install/testing instructions
+[1;35m|[m * [33md5f2766[m feat: llm principal helper
+[1;35m|[m * [33mddfa95c[m feat: resource utilities
+[1;35m|[m * [33mfd1750f[m feat: base testing structure
+[1;35m|[m * [33m8dd9c91[m feat: proposed client strcuture
+[1;35m|[m * [33m4addc5d[m docs: log examples for decorator issue
+[1;35m|[m * [33ma9b49a6[m feat: pytest for mcp server
+[1;35m|[m[1;35m/[m  
+*   [33m854e933[m Merge pull request #6 from Robbo-lab/refactor-project-linter-and-fmt-standards
+[31m|[m[32m\[m  
+[31m|[m * [33m7b870e2[m fix: made linter rules less strict
+[31m|[m * [33m5faddcb[m fix: simplified ci to pass in this prototyping state
+[31m|[m * [33mb1741df[m fix: made linter rules more clear
+[31m|[m * [33m4d8ede7[m fix: homepage link
+[31m|[m * [33m451f7ab[m Update requirements-dev.txt
+[31m|[m * [33m0996db7[m fix: removed pytest from non-dev deps
+[31m|[m * [33m081f4e7[m fix: made uv instructions more clear
+[31m|[m * [33m88c8981[m fix: synced onboarding.md with project standards
+[31m|[m *   [33me232ee7[m Merge branch 'main' into refactor-project-linter-and-fmt-standards
+[31m|[m [33m|[m[31m\[m  
+[31m|[m [33m|[m[31m/[m  
+[31m|[m[31m/[m[33m|[m   
+* [33m|[m   [33mf7cc9a1[m Merge pull request #14 from Robbo-lab/docs/contribution-guidelins-v1
+[35m|[m[36m\[m [33m\[m  
+[35m|[m * [33m|[m [33mf610a34[m docs: small update for clarify
+[35m|[m * [33m|[m [33m4b74fbf[m doc: contribution guidelines
+[35m|[m[35m/[m [33m/[m  
+[35m|[m * [33m0a3b7a8[m feature: made all dependencies explicit in the pyproject.toml
+[35m|[m * [33m623149b[m docs: small update for clarify
+[35m|[m * [33m1f42c24[m doc: contribution guidelines
+[35m|[m * [33m23c8fcc[m this commit adds optional support for ruff lint and ruff format which is 1 to 1 the same logical behaviour as flake8 which should output the exact same Linter error and formatting as flake8 fbut much faster
+[35m|[m[35m/[m  
+* [33m3dbb433[m feat: starting code
+* [33m7dd555f[m feat: specification without images
+* [33md96e7b6[m feat: specification

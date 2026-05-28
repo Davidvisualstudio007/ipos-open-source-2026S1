@@ -5,18 +5,17 @@ Some intro paragraph here explaining the architecture...
 ## System Diagram
 
 ```mermaid
-graph TD
-    HumanClient["Human ClientBrowser,<br/> curl, Postman"]
-    AIClient["AI ClientGemini,<br/>MCP Inspector"]
-    Gemini["Gemini APIExternalPLANNED"]
+graph LR
+    HumanClient["Human Client<br/>Browser, curl, Postman"]
+    AIClient["AI Client<br/>Gemini, MCP Inspector"]
+    Gemini["Gemini API<br/>External<br/>PLANNED"]
 
     subgraph AgServer ["Agriculture MCP Server (localhost:8003)"]
-        FastAPI["FastAPI LayerHTTP routes, JSONBUILT"]
-        MCP["MCP LayerTools, Resources, PromptsBUILT"]
+        FastAPI["FastAPI Layer<br/>HTTP routes, JSON<br/>BUILT"]
+        MCP["MCP Layer<br/>Tools, Resources, Prompts<br/>BUILT"]
     end
 
-    Service["Service LayerTaskServicePLANNED"]
-    Storage[("In-Memory StorageList + ID lookup mapPLANNED")]
+    Service["Service Layer<br/>TaskService<br/>PLANNED"]
 
     HumanClient -->|HTTP request| FastAPI
     AIClient -->|MCP request| MCP
@@ -25,10 +24,7 @@ graph TD
     MCP -.->|calls service| Service
     MCP -.->|natural language| Gemini
 
-    Service -.->|reads / writes| Storage
-
     style Service stroke-dasharray: 5 5
-    style Storage stroke-dasharray: 5 5
     style Gemini stroke-dasharray: 5 5
 ```
 
