@@ -45,4 +45,11 @@ graph LR
 | FastAPI Layer | `app/api/` | Partially built |
 | MCP Layer | `app/mcp/` | Built |
 | Service Layer | `app/services/` | Planned |
-| Gemini | External | Planned |
+| Gemini | External | Planned | 
+
+
+## Explanation
+1. User sets up App with > python main.py. A Docs is also generated.
+2. Once running a separate terminal sends a GET query.
+3. App processes input and returns the result to user via JSON.
+4. User can also visit the server Docs for a UI.
