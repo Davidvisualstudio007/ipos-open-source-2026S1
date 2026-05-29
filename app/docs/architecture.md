@@ -38,4 +38,11 @@ graph LR
 - **Solid border** = built today (as of 05/24/2026)
 - **Dashed border** = planned, not yet built
 
-(...more content like the folder map table...)
+## Folder Map
+
+| Box in diagram | Folder | Status |
+|---|---|---|
+| FastAPI Layer | `app/api/` | Partially built |
+| MCP Layer | `app/mcp/` | Built |
+| Service Layer | `app/services/` | Planned |
+| Gemini | External | Planned |
