@@ -1,6 +1,6 @@
 version = 1
 revision = 3
-requires-python = ">=3.14"
+requires-python = ">=3.13"
 
 [[package]]
 name = "aiofile"
@@ -1081,15 +1081,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/22/f5/df4e9027acead3ecc63e50fe1e36aca1523e1719559c499951bb4b53188f/referencing-0.37.0.tar.gz", hash = "sha256:44aefc3142c5b842538163acb373e24cce6632bd54bdb01b21ad5863489f50d8", size = 78036, upload-time = "2025-10-13T15:30:48.871Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2c/58/ca301544e1fa93ed4f80d724bf5b194f6e4b945841c5bfd555878eea9fcb/referencing-0.37.0-py3-none-any.whl", hash = "sha256:381329a9f99628c9069361716891d34ad94af76e461dcb0335825aecc7692231", size = 26766, upload-time = "2025-10-13T15:30:47.625Z" },
-]
-
-[[package]]
-name = "result-pattern"
-version = "0.2.2"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/7d/bf/87645be9c58b51f6d30e64f7e43e76e9f69fa170ddcf276e7187955f9fb8/result_pattern-0.2.2.tar.gz", hash = "sha256:4a6734114dc76f38d36a98def4c47612ab5e3e51e9293c5177d33ed8b7e2ef5d", size = 36742, upload-time = "2026-03-12T06:23:35.278Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d6/e2/6465db4174736c0ef9fa4731c29ec3aa6ba507b28318b9b54cad3de25bfc/result_pattern-0.2.2-py3-none-any.whl", hash = "sha256:ee8623a5ece67ed290519de601925ff298f55f858955e0737c5c8e1cb00dc072", size = 39768, upload-time = "2026-03-12T06:23:34.39Z" },
 ]
 
 [[package]]
