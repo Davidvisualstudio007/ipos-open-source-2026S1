@@ -4,6 +4,7 @@ import time
 from fastapi import APIRouter, HTTPException
 from app.core.exceptions import ValidationError
 from pydantic import BaseModel, Field
+from app.mcp.mcp_tools.conversion import miles_to_kilometers_converter
 
 router = APIRouter(prefix="", tags=["unit-conversion"])
 
@@ -57,7 +58,7 @@ def miles_to_kilometers_value(miles: float) -> float:
             "Distance is unrealistically large for this tutorial example."
             )
 
-    return miles / 0.621371
+    return miles_to_kilometers_converter(miles)
 
 
 @router.post("/miles-to-kilometers")
